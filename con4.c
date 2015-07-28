@@ -112,7 +112,7 @@ int menu(void)
     scanf("%d", &menu_input);
     read_rest_of_line();
 	
-	printf("\n"");
+	printf("\n");
 
     return menu_input;
 }
