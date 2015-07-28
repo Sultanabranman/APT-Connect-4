@@ -72,15 +72,12 @@ int main(void)
        {
           /*play game*/
            case PLAYGAME:
-               {
-                   getPlayerNames(player1_name, player2_name);
-                   play_game(player1_name, player2_name, scoreboard);
+               {                        
                    break;
                }
            /* Display scoreboard*/
            case DISPLAYSCOREBOARD:
-               {
-                   display_scoreboard(scoreboard);
+               {                   
                    break;
                }
            
