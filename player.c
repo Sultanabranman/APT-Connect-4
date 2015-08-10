@@ -12,7 +12,7 @@
 /**
  * @param human the human player to initialise
  **/
-enum input_result get_human_player(struct player* human)
+enum input_result get_human_player(struct player * human)
 {
     /* placeholder return value. You should prompt the user 
      * for their name and then initialise all other values in the
@@ -28,8 +28,12 @@ enum input_result get_computer_player(struct player * computer)
 {
     /* initialise all variables that are part of the struct to sensible 
      * values */
+	 (*computer).name = "COMPUTER";
+	 (*computer).thiscolor = C_EMPTY;
+	 (*computer).counters = 0;
+	 (*computer).type = COMPUTER;
 
-    return FAILURE;
+    return SUCCESS;
 }
 
 /**
