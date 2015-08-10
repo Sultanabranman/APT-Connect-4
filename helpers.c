@@ -25,4 +25,44 @@ void read_rest_of_line(void)
     clearerr(stdin);
 }
 
+int getString(char* string, unsigned length, char* prompt)
+{
+	int finished = 0;
+	char tempString[MAX_NAME_LEN + 2];
+
+
+	do
+	{
+		/* Provide input prompt */
+		printf("%s", prompt);
+
+		/* Accept input */
+		fgets(tempString, length + 2, stdin);
+
+		/* A string that doesn't have a newline character is too long */
+		if (tempString[strlen(tempString) - 1] != '\n')
+		{
+			printf("Input was too long\n");
+			read_rest_of_line();
+		}
+		else if(tempString[1] == '\0')
+        {
+            printf("\nName must be at least 1 character long\n\n");
+        }
+		else
+		{
+			finished = 1;
+		}
+
+	}while (finished == 0);
+
+	/* Overwrite the \n character with \0 */
+	tempString[strlen(tempString) -1] = '\0';
+
+	/* Makes result available to calling function */
+	strcpy(string, tempString);
+
+	return 1;
+}
+
 
