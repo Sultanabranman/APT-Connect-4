@@ -20,6 +20,18 @@
  **/
 void initialise_board(enum cell_contents board[][BOARDWIDTH])
 {
+	int i;
+	int j;
+
+	for(i=0; i < BOARDHEIGHT; i++)
+	{
+		for(j=0; j < BOARDWIDTH; j++)
+		{
+			board[i][j] = C_EMPTY;
+		}
+	}
+
+	return;
 }
 
 /**
@@ -30,6 +42,54 @@ void initialise_board(enum cell_contents board[][BOARDWIDTH])
  **/
 void display_board(enum cell_contents board[][BOARDWIDTH])
 {
+	int i;
+	int j;
+
+	for(i = 0; i <= 8; i++)
+	{
+		if(i == 0)
+		{
+			printf("   |");
+		}
+		else if(i == 8)
+		{
+			printf(" %d |", i-1);
+			printf("\n----------------------------------- \n");
+		}
+		else
+		{
+			printf(" %d |", i-1);
+		}
+	}
+
+	for(i=0; i< BOARDWIDTH; i++)
+	{
+		for (j=-1; j <  BOARDHEIGHT ; j++)
+		{
+			if(j == -1 )
+			{
+				printf(" %d |", i);
+			}
+			else if(board[i][j] == C_EMPTY)
+			{
+				printf("   |");
+			}
+			else if(board[i][j] == C_RED)
+			{
+				printf(" 1 |");
+			}
+			else if(board[i][j] == C_WHITE)
+			{
+				printf(" 2 |");
+			}
+			if(j == BOARDHEIGHT - 1)
+			{
+			   printf("\n----------------------------------- \n");
+			}
+		}
+	}
+
+	return;
 }
  
 
