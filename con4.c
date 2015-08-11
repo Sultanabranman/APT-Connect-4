@@ -57,6 +57,13 @@ int main(void)
     scoreboard scores;
     /* the two players and a pointer to who won the last game */
     struct player human_player, computer_player, *winner;
+	
+	/* Pointers to the human and computer structs */
+	struct player *p_human_player, *p_computer_player;
+	
+	/* Assigns the pointers the address of the human and computer structs */
+	p_human_player = &human_player;
+	p_computer_player = &computer_player;
 
     /* with each of the comments below, insert the code that performs 
      * this function 
@@ -72,7 +79,10 @@ int main(void)
        {
           /*play game*/
            case PLAYGAME:
-               {                        
+               {   
+			       get_human_player(p_human_player);
+				   get_computer_player(p_computer_player);
+				   play_game(p_human_player, p_computer_player);
                    break;
                }
            /* Display scoreboard*/
