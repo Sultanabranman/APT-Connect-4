@@ -72,6 +72,9 @@ struct player * play_game(struct player * human ,
 {
     /* declaration that allocates the board for the game */
     enum cell_contents board[BOARDHEIGHT][BOARDWIDTH];
+	
+	initialise_board(board);
+	display_board(board);
     
     return NULL;
 }
