@@ -80,7 +80,7 @@ int main(void)
           /*play game*/
            case PLAYGAME:
                {   
-			       get_human_player(p_human_player);
+			       get_human_player(p_human_player);			   
 				   get_computer_player(p_computer_player);
 				   play_game(p_human_player, p_computer_player);
                    break;
