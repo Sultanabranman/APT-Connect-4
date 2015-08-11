@@ -28,7 +28,7 @@ void read_rest_of_line(void)
 int getString(char* string, unsigned length, char* prompt)
 {
 	int finished = 0;
-	char tempString[NAMELEN + 2];
+	char tempString[MAX_NAME_LEN + 2];
 
 
 	do
