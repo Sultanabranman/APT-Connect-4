@@ -18,10 +18,12 @@ enum input_result get_human_player(struct player * human)
      * for their name and then initialise all other values in the
      * player struct to sensible values.
      */
-	char* player_name = "";
+	
+	char* player_name = "";	
 	getPlayerName(player_name);	
 	
 	strcpy((*human).name, player_name);
+	
 	(*human).thiscolor = C_EMPTY;
 	(*human).counters = 0;
 	(*human).type = HUMAN;
