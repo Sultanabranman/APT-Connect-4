@@ -18,7 +18,14 @@ enum input_result get_human_player(struct player * human)
      * for their name and then initialise all other values in the
      * player struct to sensible values.
      */
-    return FAILURE;
+	char* player_name = "";
+	getPlayerName(player_name);	
+	
+	strcpy((*human).name, player_name);
+	(*human).thiscolor = C_EMPTY;
+	(*human).counters = 0;
+	(*human).type = HUMAN;
+    return SUCCESS;
 }
 
 /**
@@ -26,9 +33,10 @@ enum input_result get_human_player(struct player * human)
  **/
 enum input_result get_computer_player(struct player * computer)
 {
+	char* computer_name = "COMPUTER";
     /* initialise all variables that are part of the struct to sensible 
      * values */
-	 (*computer).name = "COMPUTER";
+	 strcpy((*computer).name, computer_name);
 	 (*computer).thiscolor = C_EMPTY;
 	 (*computer).counters = 0;
 	 (*computer).type = COMPUTER;
@@ -66,3 +74,20 @@ enum input_result take_turn(struct player * current,
      */
     return FAILURE;
 }
+
+void getPlayerName(char* name)
+{
+	char player_name[NAMELEN + 1];	
+	char prompt[PROMPT_LENGTH + 1];
+
+	/* Get name of player 1 */
+	sprintf(prompt, "What is your name? (max %d characters): "
+		, NAMELEN);
+
+	getString(player_name, NAMELEN, prompt);	
+
+	strcpy(name, player_name);
+	
+	return;
+}	
+

@@ -16,6 +16,7 @@
  *  maximum length of a player name in the game
  **/
 #define NAMELEN 20
+#define PROMPT_LENGTH 80
 
 /**
  * defines the type of the player
@@ -72,4 +73,7 @@ enum input_result get_computer_player(struct player *);
  * ask them which column they wish to drop a token into.
  **/
 enum input_result take_turn(struct player *, enum cell_contents[][BOARDWIDTH]);
+
+/** Gets player name **/
+void getPlayerName(char*);
 #endif

@@ -18,6 +18,8 @@
  **/
 #ifndef HELPERS_H
 #define HELPERS_H
+
+#define NAMELEN 20
 /**
  * the possible values that can be returned from custom input handling 
  * functions
