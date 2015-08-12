@@ -19,11 +19,10 @@ enum input_result get_human_player(struct player * human)
      * player struct to sensible values.
      */
 	
-	char* player_name = NULL;	
+	char player_name[NAMELEN + 1];	
 	getPlayerName(player_name);	
 	
-	
-	
+	strcpy((*human).name, player_name);
 	(*human).thiscolor = C_EMPTY;
 	(*human).counters = 0;
 	(*human).type = HUMAN;
@@ -91,6 +90,8 @@ void getPlayerName(char* name)
 	getString(player_name, NAMELEN, prompt);
 	
 	printf("Player name is: '%s'\n\n", player_name);
+	
+	strcpy(name, player_name);
 	
 	return;
 }	
