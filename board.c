@@ -44,20 +44,27 @@ void display_board(enum cell_contents board[][BOARDWIDTH])
 {
 	int i;
 	int j;
-
+	
+/** displays column number across top of board **/ 
 	for(i = MINCOLUMN; i <= BOARDWIDTH; i++)
-	{		
+	{
+		
+		/** Enters final column number then enters a line underneath 
+		*	numbers 
+		**/
 		if(i == MAXCOLUMN)
 		{
 			printf(" %d |", i);
 			printf("\n---------------------------- \n");
 		}
+		/** Enters column number **/
 		else
 		{
 			printf(" %d |", i);
 		}
 	}
-
+	
+/** Fills board with approapriate tokens **/
 	for(i=0; i< BOARDHEIGHT; i++)
 	{
 		for (j=0; j <  BOARDWIDTH ; j++)
@@ -74,6 +81,7 @@ void display_board(enum cell_contents board[][BOARDWIDTH])
 			{
 				printf(" 2 |");
 			}
+			/** Puts line across bottom of board **/
 			if(j == BOARDWIDTH - 1)
 			{
 			   printf("\n---------------------------- \n");
