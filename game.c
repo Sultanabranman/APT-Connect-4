@@ -73,10 +73,29 @@ struct player * play_game(struct player * human ,
     /* declaration that allocates the board for the game */
     enum cell_contents board[BOARDHEIGHT][BOARDWIDTH];
 	
-	initialise_board(board);
-	display_board(board);
+	/** creates a struct for the current player **/
+	struct player current_player;
+    struct player *p_current_player = &current_player;   
+	
+	while(1)
+	{
+		randomise_colour(human, computer);
+
+        if((*human).thiscolor == C_RED)
+        {
+            p_current_player = computer;
+        }
+        else if((*computer).thiscolor == C_RED)
+        {
+            p_current_player = human;
+        }
+		
+		initialise_board(board);
+		display_board(board);
+		
+		return NULL;
+	}
     
-    return NULL;
 }
 
 /**
@@ -118,5 +137,35 @@ enum game_state test_for_winner(
      * game has been won and who the winner is
      */
     return G_NO_WINNER;
+}
+
+void randomise_colour(struct player * human, struct player * computer)
+{
+	int r;
+	
+    srand(time(NULL));    
+	r = rand() %2;
+
+    if(r == 0)
+	{	
+		/** Set player to red **/
+	    (*human).thiscolor = C_RED;
+	    
+		/** Set computer to white **/
+	    (*computer).thiscolor = C_WHITE;    
+
+	    return;
+	}
+
+    if(r == 1)
+	{
+		/** Set player to white **/
+	    (*human).thiscolor = C_WHITE;
+	   
+		/** Set Computer to red **/
+	    (*computer).thiscolor = C_RED;
+	    
+	    return;
+	}
 }
 
