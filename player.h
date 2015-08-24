@@ -17,6 +17,7 @@
  **/
 #define NAMELEN 20
 #define PROMPT_LENGTH 80
+#define INPUT_LEN 1
 
 /**
  * defines the type of the player

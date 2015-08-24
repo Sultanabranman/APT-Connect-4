@@ -75,7 +75,9 @@ struct player * play_game(struct player * human ,
 	
 	/** creates a struct for the current player **/
 	struct player current_player;
-    struct player *p_current_player = &current_player;   
+    
+	get_human_player(human);
+	get_computer_player(computer);
 	
 	while(1)
 	{
@@ -83,17 +85,24 @@ struct player * play_game(struct player * human ,
 
         if((*human).thiscolor == C_RED)
         {
-            p_current_player = computer;
+            
         }
         else if((*computer).thiscolor == C_RED)
         {
-            p_current_player = human;
+            
         }
 		
 		initialise_board(board);
-		display_board(board);
 		
-		return NULL;
+		while(1)
+		{
+			display_board(board);
+			
+			
+		
+			return NULL;
+		}
+		
 	}
     
 }
@@ -141,9 +150,8 @@ enum game_state test_for_winner(
 
 void randomise_colour(struct player * human, struct player * computer)
 {
-	int r;
-	
-    srand(time(NULL));    
+	int r;	
+        
 	r = rand() %2;
 
     if(r == 0)

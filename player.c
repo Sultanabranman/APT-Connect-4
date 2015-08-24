@@ -68,12 +68,21 @@ enum input_result get_computer_player(struct player * computer)
 enum input_result take_turn(struct player * current,
         enum cell_contents board[][BOARDWIDTH])
 {
-    /*
-     * Default return value - delete this comment and the return
-     * value and replace it with appropriate logic to handle either
-     * a human or computer turn including handling any input errors.
-     */
-    return FAILURE;
+	char user_input[INPUT_LEN];
+	
+    if((*current).type == HUMAN)
+	{
+		while(1)
+		{
+		    printf("Please enter a column in which to drop a token:\n");
+		    		
+		}
+		
+	}
+	if((*current).type == COMPUTER)
+	{
+		
+	}    
 }
 
 void getPlayerName(char* name)

@@ -24,4 +24,4 @@
 #define DISPLAYSCOREBOARD 2
 #define QUIT 3
  
- int menu(void);
+int menu(void);
