@@ -89,7 +89,7 @@ int main(void)
            case QUIT:
                {
                    puts("\nExiting program....");
-                   EXIT_SUCCESS;
+                   return EXIT_SUCCESS;
                }
            default:
                {
