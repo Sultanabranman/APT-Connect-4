@@ -69,7 +69,7 @@ int main(void)
 
     /*display menu and get menu choice until the user chooses to quit */
 
-	while(1)
+	while(TRUE)
     {
        switch(menu())
        {
@@ -89,7 +89,7 @@ int main(void)
            case QUIT:
                {
                    puts("\nExiting program....");
-                   exit(0);
+                   EXIT_SUCCESS;
                }
            default:
                {

@@ -175,7 +175,8 @@ enum game_state test_for_winner(
 void randomise_colour(struct player * human, struct player * computer)
 {
 	int r;	
-        
+      
+	/* generates a random number between 0 and 1 */
 	r = rand() %2;
 
     if(r == 0)

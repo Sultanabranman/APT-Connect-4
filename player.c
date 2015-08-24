@@ -22,10 +22,10 @@ enum input_result get_human_player(struct player * human)
 	char player_name[NAMELEN + 1];	
 	getPlayerName(player_name);	
 	
-	strcpy((*human).name, player_name);
-	(*human).thiscolor = C_EMPTY;
-	(*human).counters = NO_COUNTERS;
-	(*human).type = HUMAN;
+	strcpy(human->name, player_name);
+	human->thiscolor = C_EMPTY;
+	human->counters = NO_COUNTERS;
+	human->type = HUMAN;
     return SUCCESS;
 }
 
@@ -37,10 +37,10 @@ enum input_result get_computer_player(struct player * computer)
 	char* computer_name = "COMPUTER";
     /* initialise all variables that are part of the struct to sensible 
      * values */
-	 strcpy((*computer).name, computer_name);
-	 (*computer).thiscolor = C_EMPTY;
-	 (*computer).counters = NO_COUNTERS;
-	 (*computer).type = COMPUTER;
+	 strcpy(computer->name, computer_name);
+	 computer->thiscolor = C_EMPTY;
+	 computer->counters = NO_COUNTERS;
+	 computer->type = COMPUTER;
 
     return SUCCESS;
 }
@@ -72,7 +72,7 @@ enum input_result take_turn(struct player * current,
 	
     if((*current).type == HUMAN)
 	{
-		while(1)
+		while(TRUE)
 		{
 		    printf("Please enter a column in which to drop a token:\n");
 		    		
@@ -81,6 +81,22 @@ enum input_result take_turn(struct player * current,
 	}
 	if((*current).type == COMPUTER)
 	{
+		int column_choice;
+		
+		/* loop counters */
+		int i;
+		int j;
+		
+		/* chooses a random column */
+		column_choice = rand() %MAXCOLUMN;
+		
+		for (i=0; i< BOARDHEIGHT; i++)
+		{
+			if(board[i][column_choice] == C_EMPTY)
+			{
+				board[i][column_choice] = current->thiscolor;
+			}
+		}
 		
 	}    
 }
