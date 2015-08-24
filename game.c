@@ -32,7 +32,17 @@
  **/
 static void swap_players(struct player ** current, struct player ** other)
 {
-    /* implement a classic swap using a temporary pointer */
+	/* creates temporary player struct to store current player*/
+    struct player **tmp;
+	
+	/* copies current player to tmp */
+	tmp = current;
+	
+	/* Swaps the players */
+	current = other;
+	other = tmp;
+	
+	return;
 }
 
 /**
