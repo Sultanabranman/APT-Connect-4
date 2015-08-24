@@ -83,7 +83,7 @@ struct player * play_game(struct player * human ,
     /* declaration that allocates the board for the game */
     enum cell_contents board[BOARDHEIGHT][BOARDWIDTH];
 	
-	/** creates a pointer to the current player **/
+	/* creates a pointer to the current player */
 	struct player *current_player;
     
 	/* Initialises players */
@@ -97,7 +97,7 @@ struct player * play_game(struct player * human ,
 	
 	 if((*human).thiscolor == C_WHITE)
      {
-        current_player = human;
+	    current_player = human;
      }
      else if((*computer).thiscolor == C_WHITE)
      {
@@ -109,8 +109,20 @@ struct player * play_game(struct player * human ,
 	
 	/* main game loop */
 	while(1)
-	{
+	{		
 		display_board(board);
+		
+		take_turn(current_player, board);
+		
+		/* Swaps players */
+		if(current_player == human)
+		{
+			swap_players(&current_player, &computer);
+		}
+		else if(current_player == computer)
+		{
+			swap_players(&current_player, &human);
+		}
 			
 		return NULL;
 	}
@@ -168,10 +180,10 @@ void randomise_colour(struct player * human, struct player * computer)
 
     if(r == 0)
 	{	
-		/** Set player to red **/
+		/* Set player to red */
 	    (*human).thiscolor = C_RED;
 	    
-		/** Set computer to white **/
+		/* Set computer to white */
 	    (*computer).thiscolor = C_WHITE;    
 
 	    return;
@@ -179,10 +191,10 @@ void randomise_colour(struct player * human, struct player * computer)
 
     if(r == 1)
 	{
-		/** Set player to white **/
+		/* Set player to white */
 	    (*human).thiscolor = C_WHITE;
 	   
-		/** Set Computer to red **/
+		/* Set Computer to red */
 	    (*computer).thiscolor = C_RED;
 	    
 	    return;
