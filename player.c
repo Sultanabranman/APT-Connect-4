@@ -24,7 +24,7 @@ enum input_result get_human_player(struct player * human)
 	
 	strcpy((*human).name, player_name);
 	(*human).thiscolor = C_EMPTY;
-	(*human).counters = 0;
+	(*human).counters = NO_COUNTERS;
 	(*human).type = HUMAN;
     return SUCCESS;
 }
@@ -39,7 +39,7 @@ enum input_result get_computer_player(struct player * computer)
      * values */
 	 strcpy((*computer).name, computer_name);
 	 (*computer).thiscolor = C_EMPTY;
-	 (*computer).counters = 0;
+	 (*computer).counters = NO_COUNTERS;
 	 (*computer).type = COMPUTER;
 
     return SUCCESS;
