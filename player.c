@@ -81,17 +81,25 @@ enum input_result take_turn(struct player * current,
 		/* loop counter */
 		int i;		
 		
-		/* chooses a random column */
-		column_choice = rand() %MAXCOLUMN;
-		
-		for (i = BOARDHEIGHT - 1; i >= TOPOFBOARD; i--)
+		while(TRUE)
 		{
-			if(board[i][column_choice] == C_EMPTY)
-			{
-				board[i][column_choice] = current->thiscolor;				
-				return SUCCESS;
-			}
+			/* chooses a random column */
+		    column_choice = rand() %MAXCOLUMN;
+		
+		    for (i = BOARDHEIGHT - 1; i >= TOPOFBOARD; i--)
+		    {
+			    if(board[i][column_choice] == C_EMPTY)
+			    {
+				    board[i][column_choice] = current->thiscolor;				
+				    return SUCCESS;
+			    }
+			    else if (board[i][column_choice] == C_EMPTY && i == TOPOFBOARD)
+			    {
+				    break;
+			    }
+		    }
 		}
+		
 		
 	}    
 }
