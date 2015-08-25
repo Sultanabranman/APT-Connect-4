@@ -69,19 +69,22 @@ void display_board(enum cell_contents board[][BOARDWIDTH])
 	{
 		for (j=0; j <  BOARDWIDTH ; j++)
 		{			
+			/* Represents an empty slot */
 			if(board[i][j] == C_EMPTY)
 			{
 				printf("   |");
 			}
+			/* Places red token */
 			else if(board[i][j] == C_RED)
 			{
 				printf(" %s |", RED_TOKEN);
 			}
+			/* Places white token */
 			else if(board[i][j] == C_WHITE)
 			{
 				printf(" %s |", WHITE_TOKEN);
 			}
-			/** Puts line across bottom of board **/
+			/* Puts line across bottom of board */
 			if(j == BOARDWIDTH - 1)
 			{
 			   printf("\n---------------------------- \n");
