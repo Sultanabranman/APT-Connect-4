@@ -27,8 +27,8 @@ void read_rest_of_line(void)
 
 int getString(char* string, unsigned length, char* prompt)
 {
-	int finished = 0;
-	char tempString[NAMELEN + 2];
+	int finished = FALSE;
+	char tempString[NAMELEN + EXTRACHARS];
 
 
 	do
@@ -37,7 +37,7 @@ int getString(char* string, unsigned length, char* prompt)
 		printf("%s", prompt);
 
 		/* Accept input */
-		fgets(tempString, length + 2, stdin);
+		fgets(tempString, length + EXTRACHARS, stdin);
 
 		/* A string that doesn't have a newline character is too long */
 		if (tempString[strlen(tempString) - 1] != '\n')
@@ -51,10 +51,10 @@ int getString(char* string, unsigned length, char* prompt)
         }
 		else
 		{
-			finished = 1;
+			finished = TRUE;
 		}
 
-	}while (finished == 0);
+	}while (finished == FALSE);
 
 	/* Overwrite the \n character with \0 */
 	tempString[strlen(tempString) -1] = '\0';
@@ -62,7 +62,7 @@ int getString(char* string, unsigned length, char* prompt)
 	/* Makes result available to calling function */
 	strcpy(string, tempString);
 
-	return 1;
+	return TRUE;
 }
 
 

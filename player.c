@@ -19,7 +19,7 @@ enum input_result get_human_player(struct player * human)
      * player struct to sensible values.
      */
 	
-	char player_name[NAMELEN + 1];	
+	char player_name[NAMELEN + EXTRACHARS];	
 	getPlayerName(player_name);	
 	
 	strcpy(human->name, player_name);
@@ -67,14 +67,17 @@ enum input_result get_computer_player(struct player * computer)
  **/
 enum input_result take_turn(struct player * current,
         enum cell_contents board[][BOARDWIDTH])
-{
-	char user_input[INPUT_LEN];
+{	
+	int column_choice;
 	
     if((*current).type == HUMAN)
 	{	
-		
+		do
+		{
+			printf("\nPlease enter a column in which to drop a token:\n");
+		} while(get_player_column(&column_choice) != SUCCESS);
 	}
-	if((*current).type == COMPUTER)
+	else if((*current).type == COMPUTER)
 	{
 		int column_choice;
 		
@@ -105,18 +108,24 @@ enum input_result take_turn(struct player * current,
 			    }
 		    }
 		}		
-	}    
+	}
+	else
+	{
+		fprintf(stderr, "Failure with player type assignment, exiting...");
+		exit(EXIT_FAILURE);
+		return FAILURE;
+	}
 }
 
 void getPlayerName(char* name)
 {
 	
-	char player_name[NAMELEN + 1];	
-	char prompt[PROMPT_LENGTH + 1];
+	char player_name[NAMELEN + EXTRACHARS];	
+	char prompt[PROMPT_LENGTH + EXTRACHARS];
 
-	/* Get name of player 1 */
+	/* Get name of player */
 	
-	sprintf(prompt, "What is your name? (max %d characters): "
+	sprintf(prompt, "What is your name? (max %d characters):\n"
 		, NAMELEN);
 
 	getString(player_name, NAMELEN, prompt);
@@ -127,4 +136,57 @@ void getPlayerName(char* name)
 	
 	return;
 }	
+
+enum input_result get_player_column(int *column_choice)
+{
+	char user_input[INPUT_LEN + EXTRACHARS];		
+	char* stringcheck = NULL;
+	
+	
+	/* Accept input */
+	fgets(user_input, INPUT_LEN + EXTRACHARS, stdin);
+
+	/* A string that doesn't have a newline character is too long */
+	if (user_input[strlen(user_input) - 1] != '\n')
+	{
+	    printf("Input was too long\n");
+	    read_rest_of_line();
+		return FAILURE;
+	}
+	else if(user_input[1] == '\0')
+    {
+        printf("\nYou must select a column\n");
+	    return FAILURE;
+    }
+	else
+	{
+	    *column_choice = strtol(user_input, &stringcheck, BASE10);
+			
+		if(*stringcheck == '\n')
+		{
+			if(*column_choice >= MINCOLUMN && *column_choice <= MAXCOLUMN)
+	        {				
+			    return SUCCESS;
+			}
+			else
+			{
+				printf("Invalid column selection");
+				return FAILURE;
+			}
+		}
+	    else
+		{
+			printf("Invalid input!\n");
+			return FAILURE;
+		}
+			
+	    	
+	}
+}
+
+	
+
+			
+	
+
 

@@ -78,4 +78,7 @@ enum input_result take_turn(struct player *, enum cell_contents[][BOARDWIDTH]);
 
 /** Gets player name **/
 void getPlayerName(char*);
+
+/* Gets the player's column choice and validates input */
+enum input_result get_player_column(int *column_choice);
 #endif

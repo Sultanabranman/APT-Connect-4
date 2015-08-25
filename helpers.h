@@ -20,6 +20,10 @@
 #define HELPERS_H
 
 #define NAMELEN 20
+
+#define BASE10 10
+
+#define EXTRACHARS 2
 /**
  * the possible values that can be returned from custom input handling 
  * functions
