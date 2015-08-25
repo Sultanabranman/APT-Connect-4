@@ -76,7 +76,11 @@ enum input_result take_turn(struct player * current,
 		{
 			printf("\nPlease enter a column in which to drop a token:\n");
 		} while(get_player_column(&column_choice) != SUCCESS);
+		
+		return SUCCESS;
 	}
+	
+	/* Logic for computer player's turn */
 	else if((*current).type == COMPUTER)
 	{
 		int column_choice;
@@ -111,7 +115,7 @@ enum input_result take_turn(struct player * current,
 	}
 	
 	/* Forces program to close due to player type assignment failure */
-	fprintf(stderr, "Failure with player type assignment, exiting...");
+	fprintf(stderr, "Failure with player type assignment, exiting...\n");
 	exit(EXIT_FAILURE);	
 	return FAILURE;
 }
@@ -152,6 +156,8 @@ enum input_result get_player_column(int *column_choice)
 	    read_rest_of_line();
 		return FAILURE;
 	}
+	
+	/* Checks if user entered a blank input */
 	else if(user_input[1] == '\0')
     {
         printf("\nYou must select a column\n");
@@ -159,19 +165,24 @@ enum input_result get_player_column(int *column_choice)
     }
 	else
 	{
+		/* Converts user input into a long int */
 	    *column_choice = strtol(user_input, &stringcheck, BASE10);
-			
+		
+		/* Checks if there is any character after integer input */
 		if(*stringcheck == '\n')
 		{
+			/* Checks if the column choice is within the board boundaries */
 			if(*column_choice >= MINCOLUMN && *column_choice <= MAXCOLUMN)
 	        {				
 			    return SUCCESS;
 			}
+			/* Prints error if selection is outside board boundaries */
 			else
 			{
 				printf("Invalid column selection");
 				return FAILURE;
 			}
+		/* Prints error if characters where found in the input */
 		}
 	    else
 		{
