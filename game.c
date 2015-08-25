@@ -112,7 +112,7 @@ struct player * play_game(struct player * human ,
 	{		
 		display_board(board);
 		
-		take_turn(current_player, board);		
+		take_turn(computer, board);		
 		
 		/* Swaps players */
 		if(current_player == human)
@@ -124,7 +124,7 @@ struct player * play_game(struct player * human ,
 			swap_players(&current_player, &human);
 		}
 			
-		return NULL;
+		
 	}
 		
 	

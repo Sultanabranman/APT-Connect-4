@@ -71,12 +71,7 @@ enum input_result take_turn(struct player * current,
 	char user_input[INPUT_LEN];
 	
     if((*current).type == HUMAN)
-	{
-		while(TRUE)
-		{
-		    printf("Please enter a column in which to drop a token:\n");
-		    		
-		}
+	{	
 		
 	}
 	if((*current).type == COMPUTER)
@@ -90,11 +85,12 @@ enum input_result take_turn(struct player * current,
 		/* chooses a random column */
 		column_choice = rand() %MAXCOLUMN;
 		
-		for (i=0; i< BOARDHEIGHT; i++)
+		for (i=BOARDHEIGHT; i >= TOPOFBOARD; i--)
 		{
 			if(board[i][column_choice] == C_EMPTY)
 			{
-				board[i][column_choice] = current->thiscolor;
+				board[i][column_choice] = current->thiscolor;				
+				return SUCCESS;
 			}
 		}
 		
