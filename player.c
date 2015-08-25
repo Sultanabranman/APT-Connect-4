@@ -81,6 +81,7 @@ enum input_result take_turn(struct player * current,
 		/* loop counter */
 		int i;		
 		
+		/* Loops until valid choice is made */
 		while(TRUE)
 		{
 			/* chooses a random column */
@@ -90,17 +91,20 @@ enum input_result take_turn(struct player * current,
 		    {
 			    if(board[i][column_choice] == C_EMPTY)
 			    {
-				    board[i][column_choice] = current->thiscolor;				
+					/* Places computer's colour token in column */
+				    board[i][column_choice] = current->thiscolor;	
+					
 				    return SUCCESS;
 			    }
-			    else if (board[i][column_choice] == C_EMPTY && i == TOPOFBOARD)
+				/** Checks if the top of the column is full, then if it is 
+				  * returns to choose a new column 
+				 **/
+			    else if (board[i][column_choice] != C_EMPTY && i == TOPOFBOARD)
 			    {
 				    break;
 			    }
 		    }
-		}
-		
-		
+		}		
 	}    
 }
 
