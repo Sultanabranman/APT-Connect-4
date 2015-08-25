@@ -41,6 +41,7 @@
 
 #define TOPOFBOARD 0
 
+
 /**
  * defines the possible contents of each cell of the board
  **/
