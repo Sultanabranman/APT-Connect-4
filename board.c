@@ -75,11 +75,11 @@ void display_board(enum cell_contents board[][BOARDWIDTH])
 			}
 			else if(board[i][j] == C_RED)
 			{
-				printf(" 1 |");
+				printf(" %s |", RED_TOKEN);
 			}
 			else if(board[i][j] == C_WHITE)
 			{
-				printf(" 2 |");
+				printf(" %s |", WHITE_TOKEN);
 			}
 			/** Puts line across bottom of board **/
 			if(j == BOARDWIDTH - 1)
