@@ -109,12 +109,11 @@ enum input_result take_turn(struct player * current,
 		    }
 		}		
 	}
-	else
-	{
-		fprintf(stderr, "Failure with player type assignment, exiting...");
-		exit(EXIT_FAILURE);
-		return FAILURE;
-	}
+	
+	/* Forces program to close due to player type assignment failure */
+	fprintf(stderr, "Failure with player type assignment, exiting...");
+	exit(EXIT_FAILURE);	
+	return FAILURE;
 }
 
 void getPlayerName(char* name)
