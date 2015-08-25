@@ -76,7 +76,7 @@ int main(void)
           /*play game*/
            case PLAYGAME:
                {   			       
-				   play_game(&human_player, &computer_player);
+				   winner = play_game(&human_player, &computer_player);
                    break;
                }
            /* Display scoreboard*/

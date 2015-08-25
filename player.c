@@ -70,14 +70,39 @@ enum input_result take_turn(struct player * current,
 {	
 	int column_choice;
 	
+	/* Loop counter */
+	int i;
+	
     if((*current).type == HUMAN)
 	{	
+	    while(TRUE)
+		{			
+		
+		/* Loop to get valid user column selection */
 		do
 		{
 			printf("\nPlease enter a column in which to drop a token:\n");
 		} while(get_player_column(&column_choice) != SUCCESS);
 		
-		return SUCCESS;
+		/* Checks if column is full, then if not places player token */
+		for (i = BOARDHEIGHT - DECREMENTBY1; i >= TOPOFBOARD; i--)
+		{				
+		    if(board[i][column_choice] == C_EMPTY)
+		    {
+				/* Places player's colour token in column */
+			    board[i][column_choice] = current->thiscolor;	
+					
+			    return SUCCESS;
+		    }
+			/* returns to get new input if column is full */
+		    else if (board[i][column_choice] != C_EMPTY && i == TOPOFBOARD)
+		    {
+				fprintf(stderr, "Error:Column is full\n");
+			    break;
+		    }
+		}	
+		}		
+		
 	}
 	
 	/* Logic for computer player's turn */
@@ -94,7 +119,8 @@ enum input_result take_turn(struct player * current,
 			/* chooses a random column */
 		    column_choice = rand() %MAXCOLUMN;
 		
-		    for (i = BOARDHEIGHT - 1; i >= TOPOFBOARD; i--)
+			/* Checks if column is full, then if not places computer token */
+		    for (i = BOARDHEIGHT - DECREMENTBY1; i >= TOPOFBOARD; i--)
 		    {
 			    if(board[i][column_choice] == C_EMPTY)
 			    {
@@ -115,7 +141,7 @@ enum input_result take_turn(struct player * current,
 	}
 	
 	/* Forces program to close due to player type assignment failure */
-	fprintf(stderr, "Failure with player type assignment, exiting...\n");
+	fprintf(stderr, "Error: Failure with player type assignment\n");
 	exit(EXIT_FAILURE);	
 	return FAILURE;
 }
@@ -173,7 +199,8 @@ enum input_result get_player_column(int *column_choice)
 		{
 			/* Checks if the column choice is within the board boundaries */
 			if(*column_choice >= MINCOLUMN && *column_choice <= MAXCOLUMN)
-	        {				
+	        {		
+				*column_choice -= DECREMENTBY1;
 			    return SUCCESS;
 			}
 			/* Prints error if selection is outside board boundaries */

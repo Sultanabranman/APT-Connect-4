@@ -20,6 +20,9 @@
 #define INPUT_LEN 1
 #define NO_COUNTERS 0
 
+/* Used to bring in line with array counting */
+#define DECREMENTBY1 1
+
 /**
  * defines the type of the player
  **/

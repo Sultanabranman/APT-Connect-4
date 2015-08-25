@@ -39,6 +39,7 @@
  **/
 #define MAXCOLUMN BOARDWIDTH
 
+/* the top of the board in the array */
 #define TOPOFBOARD 0
 
 
