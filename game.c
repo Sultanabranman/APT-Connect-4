@@ -233,6 +233,7 @@ enum game_state test_for_winner(
 	int white_count = NO_COUNTERS;	
 	
     /* Test horizontal */
+	
 	/* moves up the board */
 	for(i = 5; i >= TOPOFBOARD ; i--)
 	{
@@ -274,10 +275,51 @@ enum game_state test_for_winner(
 		}
 	}
 	/* Test vertical */
+	for(i = 5; i >= MAX_VERTICAL_CHECK ; i--)
+	{
+		/* moves to the right */
+		for(j = 0; j < MAXCOLUMN; j++)
+		{
+			/* Resets counters to zero before each check */
+			white_count = NO_COUNTERS;
+			red_count = NO_COUNTERS;
+			
+			/* checks for 4 matching tokens */
+			for(k = 0; k < NUM_IN_ROW ; k++)
+			{
+				/* If a red token is found */
+				if(board[i-k][j] == C_RED)
+				{
+					/* Increments red counter by 1 */
+					red_count++;
+					
+					/* If 4 red tokens are found in a row */
+					if(red_count == NUM_IN_ROW)
+					{
+						return G_RED;
+					}						
+				}
+				/* If a white token is found */
+				else if(board[i-k][j] == C_WHITE)
+				{
+					/* Increments white counter by 1 */
+					white_count++;
+					
+					/* If 4 white tokens are found in a row */
+					if(white_count == NUM_IN_ROW)
+					{						
+						return G_WHITE;						
+					}					
+				}
+			}
+		}
+	}
 	
 	/* Test diagonal right */
 	
 	/* Test diagonal left */
+	
+	/* Test if board is full */
 	
 	
     return G_NO_WINNER;
