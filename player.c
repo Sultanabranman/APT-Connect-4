@@ -92,7 +92,7 @@ enum input_result take_turn(struct player * current,
 		    {
 				/* Places player's colour token in column */
 			    board[i][column_choice] = current->thiscolor;	
-					
+				current->counters++;	
 			    return SUCCESS;
 		    }
 			/* returns to get new input if column is full */
@@ -127,6 +127,7 @@ enum input_result take_turn(struct player * current,
 			    {
 					/* Places computer's colour token in column */
 				    board[i][column_choice] = current->thiscolor;	
+					current->counters++;
 					
 				    return SUCCESS;
 			    }

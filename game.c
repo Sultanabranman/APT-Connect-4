@@ -105,15 +105,74 @@ struct player * play_game(struct player * human ,
      }
 	 
 	 /* initialises game board to empty */	
-	 initialise_board(board);       
+	 initialise_board(board); 
+
+	printf("This is the current state of the board:\n\n");
+	display_board(board);
 	
 	/* main game loop */
 	while(TRUE)
-	{		
+	{				
+		take_turn(current_player, board);
+		
+		/* Displays board after turn is taken */
 		printf("This is the current state of the board:\n\n");
 		display_board(board);
-		
-		take_turn(current_player, board);		
+
+		/** Tests for winner and returns player based on results or continues 
+		  *if game is still in progress 
+		 **/ 
+		switch(test_for_winner(board))
+		{
+			/* If 4 red tokens in a row is found */
+			case G_RED:
+			{
+				/* returns human to main if they are red */
+				if(human->thiscolor == C_RED)
+				{
+					printf("%s is the winner\n", human->name);
+					return human;					
+				}
+				/* returns computer to main if they are red */
+				else if (computer->thiscolor == C_RED)
+				{
+					printf("%s is the winner\n", computer->name);
+					return computer;					
+				}
+				
+				break;
+			}
+			/* If 4 white tokens in a row is found */
+			case G_WHITE:
+			{
+				/* returns human to main if they are white */
+				if(human->thiscolor == C_WHITE)
+				{
+					printf("%s is the winner\n", human->name);
+					return human;
+				}
+				/* returns computer to main if they are white */
+				else if (computer->thiscolor == C_WHITE)
+				{
+					printf("%s is the winner\n", computer->name);
+					return computer;
+				}
+				
+				break;
+			}
+			/* If the board is full and no 4 matching tokens is found */
+			case G_DRAW:
+			{
+				printf("No Winner!\n");
+				return NULL;
+				break;
+			}
+			/* If the game is still in progress */
+			case G_NO_WINNER:
+			{
+				break;
+			}
+		}
 		
 		/* Swaps players */
 		if(current_player == human)
@@ -166,10 +225,61 @@ struct player * play_game(struct player * human ,
 enum game_state test_for_winner(
         enum cell_contents board[][BOARDWIDTH])
 {
-    /* default return value  - delete this comment and the return statement
-     * below and replace them with the game logic for deciding whether a 
-     * game has been won and who the winner is
-     */
+	/* Loop counters */
+	int i, j, k;
+	
+	/* counters to check for 4 in a row */
+	int red_count= NO_COUNTERS; 
+	int white_count = NO_COUNTERS;	
+	
+    /* Test horizontal */
+	/* moves up the board */
+	for(i = 5; i >= TOPOFBOARD ; i--)
+	{
+		/* moves to the right */
+		for(j = 0; j < MAX_HORIZONTAL_CHECK; j++)
+		{
+			/* Resets counters to zero before each check */
+			white_count = NO_COUNTERS;
+			red_count = NO_COUNTERS;
+			
+			/* checks for 4 matching tokens */
+			for(k = 0; k < NUM_IN_ROW ; k++)
+			{
+				/* If a red token is found */
+				if(board[i][j+k] == C_RED)
+				{
+					/* Increments red counter by 1 */
+					red_count++;
+					
+					/* If 4 red tokens are found in a row */
+					if(red_count == NUM_IN_ROW)
+					{
+						return G_RED;
+					}						
+				}
+				/* If a white token is found */
+				else if(board[i][j+k] == C_WHITE)
+				{
+					/* Increments white counter by 1 */
+					white_count++;
+					
+					/* If 4 white tokens are found in a row */
+					if(white_count == NUM_IN_ROW)
+					{						
+						return G_WHITE;						
+					}					
+				}
+			}
+		}
+	}
+	/* Test vertical */
+	
+	/* Test diagonal right */
+	
+	/* Test diagonal left */
+	
+	
     return G_NO_WINNER;
 }
 

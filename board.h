@@ -42,6 +42,12 @@
 /* the top of the board in the array */
 #define TOPOFBOARD 0
 
+/* how far to the right needs to be checked for a winner */
+#define MAX_HORIZONTAL_CHECK 4
+
+/* how far up needs to be checked for a winner */
+#define MAX_VERTICAL_CHECK 3
+
 
 /**
  * defines the possible contents of each cell of the board
