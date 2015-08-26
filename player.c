@@ -73,6 +73,7 @@ enum input_result take_turn(struct player * current,
 	/* Loop counter */
 	int i;
 	
+	/* Logic for Human player's turn */
     if((*current).type == HUMAN)
 	{	
 	    while(TRUE)
@@ -81,7 +82,7 @@ enum input_result take_turn(struct player * current,
 		/* Loop to get valid user column selection */
 		do
 		{
-			printf("\nPlease enter a column in which to drop a token:\n");
+			printf("Please enter a column in which to drop a token:\n");
 		} while(get_player_column(&column_choice) != SUCCESS);
 		
 		/* Checks if column is full, then if not places player token */

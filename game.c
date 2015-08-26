@@ -33,14 +33,14 @@
 static void swap_players(struct player ** current, struct player ** other)
 {
 	/* creates temporary player struct to store current player*/
-    struct player **tmp;
+    struct player tmp;
 	
 	/* copies current player to tmp */
-	tmp = current;
+	tmp = **current;
 	
 	/* Swaps the players */
-	current = other;
-	other = tmp;
+	**current = **other;
+	**other = tmp;
 	
 	return;
 }
@@ -110,14 +110,13 @@ struct player * play_game(struct player * human ,
 	/* main game loop */
 	while(TRUE)
 	{		
+		printf("This is the current state of the board:\n\n");
 		display_board(board);
 		
-		take_turn(human, board);		
-		
-		take_turn(computer, board);
+		take_turn(current_player, board);		
 		
 		/* Swaps players */
-		/**if(current_player == human)
+		if(current_player == human)
 		{
 			swap_players(&current_player, &computer);
 		}
@@ -125,7 +124,7 @@ struct player * play_game(struct player * human ,
 		{
 			swap_players(&current_player, &human);
 		}
-			**/
+			
 		
 	}
 		

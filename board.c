@@ -85,7 +85,7 @@ void display_board(enum cell_contents board[][BOARDWIDTH])
 				printf(" %s |", WHITE_TOKEN);
 			}
 			/* Puts line across bottom of board */
-			if(j == BOARDWIDTH - 1)
+			if(j == BOARDWIDTH - DECREMENTBY1)
 			{
 			   printf("\n---------------------------- \n");
 			}
