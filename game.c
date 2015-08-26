@@ -235,10 +235,10 @@ enum game_state test_for_winner(
     /* Test horizontal */
 	
 	/* moves up the board */
-	for(i = 5; i >= TOPOFBOARD ; i--)
+	for(i = BOTTOMOFBOARD; i >= TOPOFBOARD ; i--)
 	{
 		/* moves to the right */
-		for(j = 0; j < MAX_HORIZONTAL_CHECK; j++)
+		for(j = LEFTOFBOARD; j < MAX_HORIZONTAL_CHECK; j++)
 		{
 			/* Resets counters to zero before each check */
 			white_count = NO_COUNTERS;
@@ -275,10 +275,12 @@ enum game_state test_for_winner(
 		}
 	}
 	/* Test vertical */
-	for(i = 5; i >= MAX_VERTICAL_CHECK ; i--)
+	
+	/* moves up */
+	for(i = BOTTOMOFBOARD; i >= MAX_VERTICAL_CHECK ; i--)
 	{
 		/* moves to the right */
-		for(j = 0; j < MAXCOLUMN; j++)
+		for(j = LEFTOFBOARD; j < MAXCOLUMN; j++)
 		{
 			/* Resets counters to zero before each check */
 			white_count = NO_COUNTERS;
