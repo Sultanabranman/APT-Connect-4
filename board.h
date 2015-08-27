@@ -43,16 +43,22 @@
 #define TOPOFBOARD 0
 
 /* the bottom of the board in the array */
-#define BOTTOMOFBOARD
+#define BOTTOMOFBOARD 5
 
 /* the left side of the board in the array */
-#define LEFTOFBOARD
+#define LEFTOFBOARD 0
+
+/* the right side of the board in the array */
+#define RIGHTOFBOARD 6
 
 /* how far to the right needs to be checked for a winner */
 #define MAX_HORIZONTAL_CHECK 4
 
 /* how far up needs to be checked for a winner */
 #define MAX_VERTICAL_CHECK 3
+
+/* how far to the left needs to be checked for a winner */
+#define MAX_DIAGONAL_LEFT_CHECK 3
 
 
 /**
