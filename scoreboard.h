@@ -22,6 +22,14 @@
  * the number of entries on the scoreboard
  **/
 #define SCOREBOARDSIZE 10
+
+/* the base value for counters */
+#define NOCOUNTERS 0
+
+/* The second last position in the scoreboard */
+#define SECONDLASTPOSITION 8
+
+#define NEXTSCOREBOARDPOSITION j+1
 /**
  * redefine an array of player structs to be a scoreboard type. 
  **/

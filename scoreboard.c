@@ -67,10 +67,12 @@ void display_scores(const scoreboard board)
 	
 	for(i=0; i < SCOREBOARDSIZE; i++)
 	{
-		if((*board[i].name) == '\n')
+		/* Checks if scoreboard position is empty */
+		if((*board[i].name) == '\0')
 		{
 			return;
 		}
+		/* Prints player name and score to console */
 		else
 		{
 			printf(" %-20s | %-20d \n", board[i].name, board[i].counters);
@@ -106,11 +108,33 @@ void display_scores(const scoreboard board)
  **/ 
  BOOLEAN add_to_scoreboard(scoreboard board, const score * sc) 
  {
-    /* placeholder return value - delete this and insert logic for
-     * inserting in sorted order by number of counters in play at the
-     * time the player won.  Remember that empty slots in the
-     * scoreboard are signified by names which are equivalent to the
-     * empty string.
-     */
+    /* loop counter */
+	int i, j;
+	 
+    if(sc == NULL)
+	{
+		return FALSE;
+	}
+	/* Iterates through the scoreboard */
+	for(i = 0; i < SCOREBOARDSIZE; i++)
+	{
+		/* Checks if new score is higher than old score */
+		if(sc->counters > board[i].counters)
+		{
+		   /** Starts at the second last scoreboard position and copies old 
+			* score one place down until it reaches position where new score 
+			* is to be entered 
+		   **/
+			for(j = SECONDLASTPOSITION; j >= i; j--)
+			{
+				board[NEXTSCOREBOARDPOSITION] = board[j];
+			}
+			/* Places new score into sorted position */
+			board[i] = *sc;
+			
+			return SUCCESS;
+		}
+	}
+	
     return FALSE; 
 }
