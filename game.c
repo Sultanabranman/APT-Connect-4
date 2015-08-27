@@ -113,7 +113,7 @@ struct player * play_game(struct player * human ,
 	/* main game loop */
 	while(TRUE)
 	{				
-		take_turn(current_player, board);
+		take_turn(human, board);
 		
 		/* Displays board after turn is taken */
 		printf("This is the current state of the board:\n\n");
@@ -123,11 +123,11 @@ struct player * play_game(struct player * human ,
 		  *if game is still in progress 
 		 **/ 
 		switch(test_for_winner(board))
-		{
+		{			
 			/* If 4 red tokens in a row is found */
 			case G_RED:
 			{
-				/* returns human to main if they are red */
+				/** returns human to main if they are red */
 				if(human->thiscolor == C_RED)
 				{
 					printf("%s is the winner\n", human->name);
@@ -141,7 +141,7 @@ struct player * play_game(struct player * human ,
 				}
 				
 				break;
-			}
+			} 
 			/* If 4 white tokens in a row is found */
 			case G_WHITE:
 			{
@@ -159,7 +159,7 @@ struct player * play_game(struct player * human ,
 				}
 				
 				break;
-			}
+			} 
 			/* If the board is full and no 4 matching tokens is found */
 			case G_DRAW:
 			{
@@ -182,9 +182,7 @@ struct player * play_game(struct player * human ,
 		else if(current_player == computer)
 		{
 			swap_players(&current_player, &human);
-		}
-			
-		
+		}		
 	}
 		
 	
@@ -232,7 +230,7 @@ enum game_state test_for_winner(
 	int red_count= NO_COUNTERS; 
 	int white_count = NO_COUNTERS;	
 	
-    /** Test horizontal by starting at bottom left corner and moving right
+	/** Test horizontal by starting at bottom left corner and moving right
       * 3 spaces and up to the top of the board as it is impossible to win 
 	  * with this condition outside of this space
 	  **/
@@ -414,23 +412,28 @@ enum game_state test_for_winner(
 			}
 		}
 	}
+    
 	
 	/* Test if board is full by checking for any empty spaces */
-	for(i = TOPOFBOARD; i < BOARDHEIGHT; i++)
+	for(i = BOTTOMOFBOARD; i >= TOPOFBOARD; i--)
 	{
 		for(j = LEFTOFBOARD; j < BOARDWIDTH; j++)
 		{
+			/*If an empty space is found, continue the game */
+			if(board[i][j] == C_EMPTY)
+			{
+				return G_NO_WINNER;
+			}
+			
 			/* If no empty spaces are found */
-			if(board[i][j] != C_EMPTY && j == BOARDWIDTH - 1 && 
-			    i == BOARDHEIGHT - 1)
+			else if(board[i][j] != C_EMPTY && j == BOARDWIDTH - 1 &&
+			    i == TOPOFBOARD)
 			{
 				return G_DRAW;
 			}
 		}
-	}
-	
-	
-    return G_NO_WINNER;
+	}    
+	return G_NO_WINNER;
 }
 
 void randomise_colour(struct player * human, struct player * computer)
