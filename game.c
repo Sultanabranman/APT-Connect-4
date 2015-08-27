@@ -113,7 +113,7 @@ struct player * play_game(struct player * human ,
 	/* main game loop */
 	while(TRUE)
 	{				
-		take_turn(human, board);
+		take_turn(current_player, board);
 		
 		/* Displays board after turn is taken */
 		printf("This is the current state of the board:\n\n");
