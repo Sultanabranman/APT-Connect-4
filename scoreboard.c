@@ -17,6 +17,7 @@ void init_scoreboard(scoreboard board)
 	/* loop counter */
 	int i;
 	
+	/* creates an empty score struct initialised to safe values */
 	score empty_score;
 	char* empty_name = "";
 	
@@ -25,6 +26,7 @@ void init_scoreboard(scoreboard board)
 	empty_score.counters = NO_COUNTERS;
 	empty_score.type = HUMAN;
 	
+	/* fills scoreboard with empty structs */
 	for(i = 0; i < SCOREBOARDSIZE; i++)
 	{
 		board[i] = empty_score;
