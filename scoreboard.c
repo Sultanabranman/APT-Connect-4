@@ -23,7 +23,7 @@ void init_scoreboard(scoreboard board)
 	
 	strcpy(empty_score.name, empty_name);	 
 	empty_score.thiscolor = C_EMPTY;
-	empty_score.counters = NO_COUNTERS;
+	empty_score.counters = NOCOUNTERS;
 	empty_score.type = HUMAN;
 	
 	/* fills scoreboard with empty structs */
@@ -56,6 +56,29 @@ void init_scoreboard(scoreboard board)
  **/
 void display_scores(const scoreboard board)
 {
+	/* loop counter */	
+	int i;
+	
+	char player[] = "Player";
+    char score[] = "Score";
+	
+	printf(" %-20s | %-20s \n", player, score);
+	printf("---------------------------------------------\n");
+	
+	for(i=0; i < SCOREBOARDSIZE; i++)
+	{
+		if((*board[i].name) == '\n')
+		{
+			return;
+		}
+		else
+		{
+			printf(" %-20s | %-20d \n", board[i].name, board[i].counters);
+		}
+	}
+	
+	return;
+	
 }
 
 /** When the game ends, you need to return the appropriate game state

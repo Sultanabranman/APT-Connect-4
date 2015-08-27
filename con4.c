@@ -110,7 +110,7 @@ int menu(void)
 {
     int menu_input;
 
-    printf("Welcome to connect 4\n");
+    printf("\nWelcome to connect 4\n");
 	printf("--------------------\n");
     printf("1) Play Game\n");
     printf("2) Display Scoreboard\n");
