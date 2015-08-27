@@ -222,10 +222,3 @@ enum input_result get_player_column(int *column_choice)
 	    	
 	}
 }
-
-	
-
-			
-	
-
-

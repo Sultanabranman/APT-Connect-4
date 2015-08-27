@@ -14,6 +14,23 @@
  **/
 void init_scoreboard(scoreboard board)
 {
+	/* loop counter */
+	int i;
+	
+	score empty_score;
+	char* empty_name = "";
+	
+	strcpy(empty_score.name, empty_name);	 
+	empty_score.thiscolor = C_EMPTY;
+	empty_score.counters = NO_COUNTERS;
+	empty_score.type = HUMAN;
+	
+	for(i = 0; i < SCOREBOARDSIZE; i++)
+	{
+		board[i] = empty_score;
+	}
+	
+	return;
 }
 
 /** For this requirement, you will need to display the scores in the

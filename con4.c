@@ -66,6 +66,7 @@ int main(void)
      */
 
     /* initialise the scoreboard */
+	init_scoreboard(scores);
 
     /*display menu and get menu choice until the user chooses to quit */
 
@@ -77,11 +78,13 @@ int main(void)
            case PLAYGAME:
                {   			       
 				   winner = play_game(&human_player, &computer_player);
+				   add_to_scoreboard(scores, winner);
                    break;
                }
            /* Display scoreboard*/
            case DISPLAYSCOREBOARD:
-               {                   
+               {   
+				   display_scores(scores);
                    break;
                }
            
