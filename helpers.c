@@ -42,12 +42,12 @@ int getString(char* string, unsigned length, char* prompt)
 		/* A string that doesn't have a newline character is too long */
 		if (tempString[strlen(tempString) - 1] != '\n')
 		{
-			printf("Input was too long\n");
+			fprintf(stderr, "Input was too long\n");
 			read_rest_of_line();
 		}
 		else if(tempString[1] == '\0')
         {
-            printf("\nName must be at least 1 character long\n\n");
+            return RTM;
         }
 		else
 		{

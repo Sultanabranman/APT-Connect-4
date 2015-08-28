@@ -12,11 +12,7 @@
 
 #ifndef PLAYER_H
 #define PLAYER_H
-/**
- *  maximum length of a player name in the game
- **/
-#define NAMELEN 20
-#define PROMPT_LENGTH 80
+
 #define INPUT_LEN 1
 #define NO_COUNTERS 0
 
@@ -80,7 +76,7 @@ enum input_result get_computer_player(struct player *);
 enum input_result take_turn(struct player *, enum cell_contents[][BOARDWIDTH]);
 
 /** Gets player name **/
-void getPlayerName(char*);
+enum input_result getPlayerName(char*);
 
 /* Gets the player's column choice and validates input */
 enum input_result get_player_column(int *column_choice);

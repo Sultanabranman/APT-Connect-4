@@ -87,8 +87,49 @@ struct player * play_game(struct player * human ,
 	struct player *current_player;
     
 	/* Initialises players */
-	get_human_player(human);
-	get_computer_player(computer);
+	switch(get_human_player(human))
+	{
+		/* struct initialisation was successful, continues as normal */
+		case SUCCESS:
+		{
+			break;
+		}
+		/* fatal error, struct initialisation failed, exits program */
+		case FAILURE:
+		{
+			fprintf(stderr, "Error: Player struct initialisation failed");
+			exit(EXIT_FAILURE);
+			break;
+		}
+		/* Returns user to menu */
+		case RTM:
+		{
+			return NULL;
+			break;
+		}
+	}
+	
+	switch(get_computer_player(computer))
+	{
+		/* struct initialisation was successful, continues as normal */
+		case SUCCESS:
+		{
+			break;
+		}
+		/* fatal error, struct initialisation failed, exits program */
+		case FAILURE:
+		{
+			fprintf(stderr, "Error: Computer struct initialisation failed");
+			exit(EXIT_FAILURE);
+			break;
+		}
+		/* Returns user to menu */
+		case RTM:
+		{
+			return NULL;
+			break;
+		}
+	}
 	
 	/** Randomly assigns player colour and sets white player 
 	  * to current player 
@@ -112,8 +153,29 @@ struct player * play_game(struct player * human ,
 	
 	/* main game loop */
 	while(TRUE)
-	{				
-		take_turn(current_player, board);
+	{	
+		/* Processes user turn */
+		switch(take_turn(current_player, board))
+		{
+			/* Game continues as normal */
+			case SUCCESS:
+			{
+				break;
+			}
+			/* Fatal error occured in turn processing, exits program */
+			case FAILURE:
+			{
+			    fprintf(stderr, "Error: player turn not processed");
+				exit(EXIT_FAILURE);
+				break;
+			}
+			/* Returns the user to the menu */
+			case RTM:
+			{
+				return NULL;
+				break;
+			}
+		}
 		
 		/* Displays board after turn is taken */
 		printf("This is the current state of the board:\n\n");
@@ -241,7 +303,7 @@ enum game_state test_for_winner(
 		/* moves to the right */
 		for(j = LEFTOFBOARD; j < MAX_HORIZONTAL_CHECK; j++)
 		{
-			/* Resets counters to zero before each check */
+		    /* Resets counters to zero before each check */
 			white_count = NO_COUNTERS;
 			red_count = NO_COUNTERS;
 			

@@ -70,36 +70,35 @@ int main(void)
 
     /*display menu and get menu choice until the user chooses to quit */
 
-	while(TRUE)
+    while(TRUE)
     {
-       switch(menu())
-       {
-          /*play game*/
-           case PLAYGAME:
-               {   			       
-				   winner = play_game(&human_player, &computer_player);
-				   add_to_scoreboard(scores, winner);
-                   break;
-               }
-           /* Display scoreboard*/
-           case DISPLAYSCOREBOARD:
-               {   
-				   display_scores(scores);
-                   break;
-               }
+        switch(menu())
+        {    
+            /*play game*/
+            case PLAYGAME:
+            {   			       
+			    winner = play_game(&human_player, &computer_player);
+			    add_to_scoreboard(scores, winner);
+                break;
+            }			
+            /* Display scoreboard*/
+            case DISPLAYSCOREBOARD:
+            {   
+			    display_scores(scores);
+                break;
+            }
            
-           /*Exit Program*/
-           case QUIT:
-               {
-                   puts("\nExiting program....");
-                   return EXIT_SUCCESS;
-               }
-           default:
-               {
-                   puts("\nInvalid Input, try again\n");
-                   break;
-               }
-       }
+            /*Exit Program*/
+            case QUIT:
+            {
+                printf("Exiting program....\n");
+                return EXIT_SUCCESS;
+            }
+            default:
+            {                
+                break;
+            }
+        }
 
     }	    
 
@@ -108,19 +107,60 @@ int main(void)
 
 int menu(void)
 {
-    int menu_input;
-
-    printf("\nWelcome to connect 4\n");
+	int menu_input;
+	char user_input[INPUT_LEN + EXTRACHARS];		
+	char* stringcheck = NULL;
+	
+	printf("\nWelcome to connect 4\n");
 	printf("--------------------\n");
     printf("1) Play Game\n");
     printf("2) Display Scoreboard\n");
     printf("3) Quit\n");  
 	printf("Please enter your choice: ");
-
-    scanf("%d", &menu_input);
-    read_rest_of_line();
 	
-	printf("\n");
+	/* Accept input */
+	fgets(user_input, INPUT_LEN + EXTRACHARS, stdin);
 
-    return menu_input;
+	/* Checks if user entered a blank input */
+	if(user_input[1] == '\0')
+    {   		
+	    return FALSE;
+    }
+	
+	/* A string that doesn't have a newline character is too long */
+	else if(user_input[strlen(user_input) - 1] != '\n')
+	{
+	    fprintf(stderr, "Error: You entered more input than expected.\n");
+	    read_rest_of_line();
+		return FALSE;
+	}	
+	
+	else
+	{
+		/* Converts user input into a long int */
+	    menu_input = strtol(user_input, &stringcheck, BASE10);
+		
+		/* Checks if there is any character after integer input */
+		if(*stringcheck == '\n')
+		{
+			if(menu_input >= PLAYGAME && menu_input <= QUIT)
+	        {		
+				return menu_input;
+			}
+			/* Prints error if selection is outside board boundaries */
+			else
+			{
+				fprintf(stderr, "Error: Invalid menu selection\n");
+				return FALSE;
+			}			
+		}	
+		/* Prints error if characters where found in the input */		
+	    else
+		{
+			fprintf(stderr, "Error: You did not enter a valid number. "
+				"Please try again\n");			
+		}		
+	}   
+
+    return FALSE;
 }

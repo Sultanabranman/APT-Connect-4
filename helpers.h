@@ -51,6 +51,4 @@ enum input_result
  **/
 void read_rest_of_line(void);
 
-int getString(char*, unsigned, char*);
-
 #endif

@@ -20,9 +20,10 @@
  **/
 void initialise_board(enum cell_contents board[][BOARDWIDTH])
 {
-	int i;
-	int j;
-
+	/* loop counters */
+    int i, j;
+	
+	/* Iterates through the gameboard and initialises each position to empty */
 	for(i=0; i < BOARDHEIGHT; i++)
 	{
 		for(j=0; j < BOARDWIDTH; j++)
@@ -42,17 +43,18 @@ void initialise_board(enum cell_contents board[][BOARDWIDTH])
  **/
 void display_board(enum cell_contents board[][BOARDWIDTH])
 {
-	int i;
-	int j;
+	/* loop counters */
+	int i, j;
 	
-/** displays column number across top of board **/ 
+	
+	/** displays column number across top of board **/ 
 	for(i = MINCOLUMN; i <= BOARDWIDTH; i++)
 	{
 		
 		/** Enters final column number then enters a line underneath 
 		*	numbers 
 		**/
-		if(i == MAXCOLUMN)
+	    if(i == MAXCOLUMN)
 		{
 			printf(" %d |", i);
 			printf("\n---------------------------- \n");

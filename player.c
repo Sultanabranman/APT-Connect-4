@@ -19,14 +19,36 @@ enum input_result get_human_player(struct player * human)
      * player struct to sensible values.
      */
 	
-	char player_name[NAMELEN + EXTRACHARS];	
-	getPlayerName(player_name);	
+	/* prompts user for name and assigns name to struct if valid */
+	switch(getPlayerName(human->name))
+	{
+		/* Input was valid, initialises to safe values */
+		case SUCCESS:
+		{
+			human->thiscolor = C_EMPTY;
+			human->counters = NO_COUNTERS;
+			human->type = HUMAN;
+			return SUCCESS;
+			
+			break;
+		}
+		/* Fatal error occured, exits program */
+		case FAILURE:
+		{
+			fprintf(stderr, "Error: player name input failed");
+			exit(EXIT_FAILURE);
+			break;
+		}
+		/* returns the user to the menu */
+		case RTM:
+		{
+			printf("Player has quit before they got started!\n");
+			return RTM;
+			break;
+		}
+	}		
 	
-	strcpy(human->name, player_name);
-	human->thiscolor = C_EMPTY;
-	human->counters = NO_COUNTERS;
-	human->type = HUMAN;
-    return SUCCESS;
+	return FAILURE;
 }
 
 /**
@@ -34,14 +56,28 @@ enum input_result get_human_player(struct player * human)
  **/
 enum input_result get_computer_player(struct player * computer)
 {
-	char* computer_name = "COMPUTER";
-    /* initialise all variables that are part of the struct to sensible 
-     * values */
-	 strcpy(computer->name, computer_name);
-	 computer->thiscolor = C_EMPTY;
-	 computer->counters = NO_COUNTERS;
-	 computer->type = COMPUTER;
+	int finished = FALSE;
+	
+	char* computer_name = "Computer";
+	
+   /** initialise all variables that are part of the struct to sensible 
+    * values 
+   **/
+	strcpy(computer->name, computer_name);
+	computer->thiscolor = C_EMPTY;
+	computer->counters = NO_COUNTERS;
+	computer->type = COMPUTER;
+	finished = TRUE;
 
+	/* if struct initialisation succeeded */
+	if(finished == TRUE){
+		return SUCCESS;
+	}
+	/* If struct initialisation failed */
+	else
+	{
+		return FAILURE;
+	}
     return SUCCESS;
 }
 
@@ -71,19 +107,40 @@ enum input_result take_turn(struct player * current,
 	int column_choice;
 	
 	/* Loop counter */
-	int i;
+	int i, finished = FALSE;
 	
 	/* Logic for Human player's turn */
-    if((*current).type == HUMAN)
+    if(current->type == HUMAN)
 	{	
 	    while(TRUE)
 		{			
-		
 		/* Loop to get valid user column selection */
 		do
 		{
 			printf("Please enter a column in which to drop a token:\n");
-		} while(get_player_column(&column_choice) != SUCCESS);
+			switch(get_player_column(&column_choice))
+			{
+				/* User entered a valid integer within the range */
+				case SUCCESS:
+				{
+					finished = TRUE;
+					break;
+				}
+				/* User entered an invalid input */
+				case FAILURE:
+				{
+					finished = FALSE;
+					break;
+				}
+				/* Returns the user to the menu */
+				case RTM:
+				{	
+					printf("%s has quit the game!", current->name);
+					return RTM;
+					break;
+				}
+			}
+		} while(finished != TRUE);
 		
 		/* Checks if column is full, then if not places player token */
 		for (i = BOARDHEIGHT - DECREMENTBY1; i >= TOPOFBOARD; i--)
@@ -98,7 +155,7 @@ enum input_result take_turn(struct player * current,
 			/* returns to get new input if column is full */
 		    else if (board[i][column_choice] != C_EMPTY && i == TOPOFBOARD)
 		    {
-				fprintf(stderr, "Error:Column is full\n");
+				fprintf(stderr, "Error: Column is full\n");
 			    break;
 		    }
 		}	
@@ -107,7 +164,7 @@ enum input_result take_turn(struct player * current,
 	}
 	
 	/* Logic for computer player's turn */
-	else if((*current).type == COMPUTER)
+	else if(current->type == COMPUTER)
 	{
 		int column_choice;
 		
@@ -148,24 +205,41 @@ enum input_result take_turn(struct player * current,
 	return FAILURE;
 }
 
-void getPlayerName(char* name)
+enum input_result getPlayerName(char* name)
 {
-	
-	char player_name[NAMELEN + EXTRACHARS];	
-	char prompt[PROMPT_LENGTH + EXTRACHARS];
+	int finished = FALSE;
+	char tempString[NAMELEN + EXTRACHARS] = "";		
 
 	/* Get name of player */
+	do
+	{
+		printf("What is your name?\n");
+		
+		fgets(tempString, NAMELEN + EXTRACHARS, stdin);
+		
+		if(tempString[1] == '\0')
+        {
+            return RTM;
+        }
+		/* A string that doesn't have a newline character is too long */
+		else if (tempString[strlen(tempString) - 1] != '\n')
+		{
+			fprintf(stderr, "Error: Input was too long\n");
+			read_rest_of_line();
+		}
+		else
+		{
+			finished = TRUE;
+		}
+	}while (finished != TRUE);
 	
-	sprintf(prompt, "What is your name? (max %d characters):\n"
-		, NAMELEN);
-
-	getString(player_name, NAMELEN, prompt);
+	/* Overwrite the \n character with \0 */
+	tempString[strlen(tempString)-1] = '\0';
 	
-	printf("Player name is: '%s'\n\n", player_name);
+    /* Makes result available to calling function */
+	strcpy(name, tempString);
 	
-	strcpy(name, player_name);
-	
-	return;
+	return SUCCESS;	
 }	
 
 enum input_result get_player_column(int *column_choice)
@@ -177,20 +251,20 @@ enum input_result get_player_column(int *column_choice)
 	/* Accept input */
 	fgets(user_input, INPUT_LEN + EXTRACHARS, stdin);
 
+	/* Checks if user entered a blank input */
+	if(user_input[1] == '\0')
+    {   		
+	    return RTM;
+    }
+	
 	/* A string that doesn't have a newline character is too long */
-	if (user_input[strlen(user_input) - 1] != '\n')
+	else if(user_input[strlen(user_input) - 1] != '\n')
 	{
-	    printf("Input was too long\n");
+	    fprintf(stderr, "Error: Input was too long\n");
 	    read_rest_of_line();
 		return FAILURE;
-	}
+	}	
 	
-	/* Checks if user entered a blank input */
-	else if(user_input[1] == '\0')
-    {
-        printf("\nYou must select a column\n");
-	    return FAILURE;
-    }
 	else
 	{
 		/* Converts user input into a long int */
@@ -208,17 +282,15 @@ enum input_result get_player_column(int *column_choice)
 			/* Prints error if selection is outside board boundaries */
 			else
 			{
-				printf("Invalid column selection");
+				fprintf(stderr, "Error: Invalid column selection\n");
 				return FAILURE;
 			}
 		/* Prints error if characters where found in the input */
 		}
 	    else
 		{
-			printf("Invalid input!\n");
+			fprintf(stderr, "Error: Invalid input!\n");
 			return FAILURE;
-		}
-			
-	    	
+		}		
 	}
 }
